@@ -32,11 +32,14 @@
             flex: 1;
             padding-right: 20px;
             width: 100%;
+            height: 300px; /* Fixed height to prevent the image from being stretched */
         }
 
         .image-container img {
             width: 100%;
+            height: 100%;
             border-radius: 10px;
+            object-fit: cover; /* Ensures the image covers the container without stretching */
         }
 
         .text-container {
@@ -73,7 +76,7 @@
             <img id="destination-img" src="" alt="Destination Image">
         </div>
         <div class="text-container">
-            <h1>Today's Travel Destination 今日旅遊景點</h1>
+            <h1>Today's Travel Destination </h1>
             <h2 id="destination-title"></h2>
             <h3 id="destination-title-cn"></h3>
             <p id="destination-description"></p>
