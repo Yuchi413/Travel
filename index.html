@@ -76,27 +76,25 @@
             <img id="destination-img" src="" alt="Destination Image">
         </div>
         <div class="text-container">
-            <h1>Today's Travel Destination </h1>
+            <h1>Today's Travel Destination 今日旅遊景點</h1>
             <h2 id="destination-title"></h2>
             <h3 id="destination-title-cn"></h3>
+            <p><strong>Country:</strong> <span id="destination-country"></span>  <span id="destination-country-cn"></span></p>
+            <p><strong>City:</strong> <span id="destination-city"></span>  <span id="destination-city-cn"></span></p>
             <p id="destination-description"></p>
             <p id="destination-description-cn"></p>
-            <p><strong>Best Time to Visit:</strong> <span id="best-time"></span></p>
-            <p><strong>最佳旅遊時間：</strong> <span id="best-time-cn"></span></p>
-            <p><strong>How to Get There:</strong> <span id="transportation"></span></p>
-            <p><strong>如何前往：</strong> <span id="transportation-cn"></span></p>
         </div>
     </div>
 
     <script>
         // Replace this array with a list of all the destinations you want to display, if you want more variety
         const knownDestinations = [
-            { title: "Eiffel Tower", description: "The Eiffel Tower is a wrought iron lattice tower on the Champ de Mars in Paris, France. It was designed by Gustave Eiffel and completed in 1889.", imageQuery: "Eiffel Tower" },
-            { title: "Great Wall of China", description: "The Great Wall of China is a series of fortifications made of various materials, built along the northern borders of China to protect against invasions.", imageQuery: "Great Wall of China" },
-            { title: "Machu Picchu", description: "Machu Picchu is a 15th-century Inca citadel located in the Andes Mountains in Peru, one of the most famous archaeological sites in the world.", imageQuery: "Machu Picchu" },
-            { title: "Colosseum", description: "The Colosseum is an ancient amphitheater located in the center of Rome, Italy. It was used for gladiatorial contests and public spectacles.", imageQuery: "Colosseum" },
-            { title: "Sydney Opera House", description: "The Sydney Opera House is a multi-venue performing arts center located in Sydney, Australia. It is one of the most recognizable and iconic buildings in the world.", imageQuery: "Sydney Opera House" },
-            { title: "Taj Mahal", description: "The Taj Mahal is a white marble mausoleum located in Agra, India. It was built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.", imageQuery: "Taj Mahal" },
+            { title: "Eiffel Tower", description: "The Eiffel Tower is a wrought iron lattice tower on the Champ de Mars in Paris, France. It was designed by Gustave Eiffel and completed in 1889.", imageQuery: "Eiffel Tower", country: "Taiwan", countryCn: "台灣", city: "Taipei", cityCn: "台北" },
+            { title: "Great Wall of China", description: "The Great Wall of China is a series of fortifications made of various materials, built along the northern borders of China to protect against invasions.", imageQuery: "Great Wall of China", country: "China", countryCn: "中國", city: "Beijing", cityCn: "北京" },
+            { title: "Machu Picchu", description: "Machu Picchu is a 15th-century Inca citadel located in the Andes Mountains in Peru, one of the most famous archaeological sites in the world.", imageQuery: "Machu Picchu", country: "Peru", countryCn: "秘魯", city: "Cusco", cityCn: "庫斯科" },
+            { title: "Colosseum", description: "The Colosseum is an ancient amphitheater located in the center of Rome, Italy. It was used for gladiatorial contests and public spectacles.", imageQuery: "Colosseum", country: "Italy", countryCn: "義大利", city: "Rome", cityCn: "羅馬" },
+            { title: "Sydney Opera House", description: "The Sydney Opera House is a multi-venue performing arts center located in Sydney, Australia. It is one of the most recognizable and iconic buildings in the world.", imageQuery: "Sydney Opera House", country: "Australia", countryCn: "澳洲", city: "Sydney", cityCn: "雪梨" },
+            { title: "Taj Mahal", description: "The Taj Mahal is a white marble mausoleum located in Agra, India. It was built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.", imageQuery: "Taj Mahal", country: "India", countryCn: "印度", city: "Agra", cityCn: "阿格拉" },
             // Add more destinations if you like...
         ];
 
@@ -118,10 +116,8 @@
                 document.getElementById("destination-title-cn").innerText = titleCn;
                 document.getElementById("destination-description").innerText = destination.description;
                 document.getElementById("destination-description-cn").innerText = descriptionCn;
-                document.getElementById("best-time").innerText = "Varies by location";
-                document.getElementById("best-time-cn").innerText = "依地點不同";
-                document.getElementById("transportation").innerText = "Check local guides";
-                document.getElementById("transportation-cn").innerText = "請查詢當地指南";
+                document.getElementById("destination-country").innerText = destination.country + " " + destination.countryCn;
+                document.getElementById("destination-city").innerText = destination.city + " " + destination.cityCn;
             } catch (error) {
                 console.error("Error fetching travel destination:", error);
             }
