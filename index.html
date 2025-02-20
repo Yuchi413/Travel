@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Travel Destination</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #ffefd5; color: #333; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .container { max-width: 900px; display: flex; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); align-items: center; }
+        .image-container { flex: 1; padding-right: 20px; }
+        .image-container img { width: 100%; border-radius: 10px; }
+        .text-container { flex: 1; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img id="destination-img" src="" alt="Destination Image">
+        </div>
+        <div class="text-container">
+            <h1 style="color: #d9534f;">Today's Travel Destination 今日旅遊景點</h1>
+            <h2 id="destination-title"></h2>
+            <h3 id="destination-title-cn"></h3>
+            <p id="destination-description"></p>
+            <p id="destination-description-cn"></p>
+            <p id="destination-details"></p>
+            <p id="destination-details-cn"></p>
+            <p><strong>Best Time to Visit:</strong> <span id="best-time"></span></p>
+            <p><strong>最佳旅遊時間：</strong> <span id="best-time-cn"></span></p>
+            <p><strong>How to Get There:</strong> <span id="transportation"></span></p>
+            <p><strong>如何前往：</strong> <span id="transportation-cn"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const destinations = [
+            { title: "Eiffel Tower", title_cn: "艾菲爾鐵塔", img: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg", description: "A famous landmark in Paris.", description_cn: "巴黎著名的地標。", details: "The Eiffel Tower was built in 1889 and is one of the most visited monuments in the world. Visitors can take an elevator to the top for a breathtaking view of Paris.", details_cn: "艾菲爾鐵塔建於1889年，是世界上參觀人數最多的紀念碑之一。遊客可以搭乘電梯登上塔頂，欣賞壯觀的巴黎景色。", bestTime: "Spring & Fall", bestTime_cn: "春季和秋季", transport: "Metro or Bus", transport_cn: "地鐵或公車" },
+            { title: "Great Wall of China", title_cn: "中國長城", img: "https://upload.wikimedia.org/wikipedia/commons/1/10/The_Great_Wall_of_China_at_Jinshanling.jpg", description: "A historic wonder in China.", description_cn: "中國的歷史奇蹟。", details: "Stretching over 13,000 miles, the Great Wall of China is an ancient fortification built to protect Chinese states from invasions. It is a UNESCO World Heritage Site.", details_cn: "長城綿延超過13,000英里，是古代中國為了防禦外敵而建造的防禦工事，也是聯合國教科文組織的世界遺產。", bestTime: "Autumn", bestTime_cn: "秋季", transport: "Train or Bus", transport_cn: "火車或公車" },
+            { title: "Grand Canyon", title_cn: "大峽谷", img: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Grand_canyon_view.jpg", description: "A stunning natural wonder in the USA.", description_cn: "美國壯觀的自然奇景。", details: "Carved by the Colorado River over millions of years, the Grand Canyon is one of the deepest and most spectacular canyons in the world, attracting millions of visitors annually.", details_cn: "大峽谷由科羅拉多河經過數百萬年的侵蝕形成，是世界上最深、最壯觀的峽谷之一，每年吸引數百萬遊客參觀。", bestTime: "Spring & Fall", bestTime_cn: "春季和秋季", transport: "Car or Bus", transport_cn: "汽車或公車" }
+        ];
+        
+        function loadDestination() {
+            const randomIndex = Math.floor(Math.random() * destinations.length); // 每次刷新隨機選擇一個景點
+            const destination = destinations[randomIndex];
+            document.getElementById("destination-img").src = destination.img;
+            document.getElementById("destination-title").innerText = destination.title;
+            document.getElementById("destination-title-cn").innerText = destination.title_cn;
+            document.getElementById("destination-description").innerText = destination.description;
+            document.getElementById("destination-description-cn").innerText = destination.description_cn;
+            document.getElementById("destination-details").innerText = destination.details;
+            document.getElementById("destination-details-cn").innerText = destination.details_cn;
+            document.getElementById("best-time").innerText = destination.bestTime;
+            document.getElementById("best-time-cn").innerText = destination.bestTime_cn;
+            document.getElementById("transportation").innerText = destination.transport;
+            document.getElementById("transportation-cn").innerText = destination.transport_cn;
+        }
+
+        window.onload = loadDestination;
+    </script>
+</body>
+</html>
