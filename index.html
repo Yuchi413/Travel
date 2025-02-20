@@ -31,28 +31,44 @@
     </div>
 
     <script>
+        const knownDestinations = [
+            { title: "Eiffel Tower", description: "The Eiffel Tower is a wrought iron lattice tower on the Champ de Mars in Paris, France. It was designed by Gustave Eiffel and completed in 1889.", imageQuery: "Eiffel Tower" },
+            { title: "Great Wall of China", description: "The Great Wall of China is a series of fortifications made of various materials, built along the northern borders of China to protect against invasions.", imageQuery: "Great Wall of China" },
+            { title: "Machu Picchu", description: "Machu Picchu is a 15th-century Inca citadel located in the Andes Mountains in Peru, one of the most famous archaeological sites in the world.", imageQuery: "Machu Picchu" },
+            { title: "Colosseum", description: "The Colosseum is an ancient amphitheater located in the center of Rome, Italy. It was used for gladiatorial contests and public spectacles.", imageQuery: "Colosseum" },
+            { title: "Sydney Opera House", description: "The Sydney Opera House is a multi-venue performing arts center located in Sydney, Australia. It is one of the most recognizable and iconic buildings in the world.", imageQuery: "Sydney Opera House" },
+            { title: "Taj Mahal", description: "The Taj Mahal is a white marble mausoleum located in Agra, India. It was built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.", imageQuery: "Taj Mahal" },
+            { title: "Pyramids of Giza", description: "The Pyramids of Giza are ancient pyramid structures located on the Giza Plateau in Egypt. They are considered one of the Seven Wonders of the Ancient World.", imageQuery: "Pyramids of Giza" },
+            { title: "Christ the Redeemer", description: "Christ the Redeemer is a giant statue of Jesus Christ located in Rio de Janeiro, Brazil. It is a famous symbol of Christianity.", imageQuery: "Christ the Redeemer" },
+            { title: "Santorini", description: "Santorini is a volcanic island in Greece, known for its stunning sunsets, white-washed buildings, and blue-domed churches.", imageQuery: "Santorini" },
+            { title: "Mount Fuji", description: "Mount Fuji is an active stratovolcano located in Japan. It is the highest mountain in Japan and an iconic symbol of the country.", imageQuery: "Mount Fuji" },
+            { title: "Grand Canyon", description: "The Grand Canyon is a massive canyon carved by the Colorado River in the U.S. state of Arizona. It is known for its stunning rock formations and deep gorges.", imageQuery: "Grand Canyon" },
+            { title: "Sahara Desert", description: "The Sahara Desert is the largest hot desert in the world, covering much of North Africa. It is known for its vast sand dunes and extreme heat.", imageQuery: "Sahara Desert" },
+            { title: "Amalfi Coast", description: "The Amalfi Coast is a stretch of coastline in southern Italy, famous for its dramatic cliffs, picturesque towns, and Mediterranean views.", imageQuery: "Amalfi Coast" },
+            { title: "Kyoto", description: "Kyoto is an ancient city in Japan, known for its temples, traditional tea houses, and beautiful gardens.", imageQuery: "Kyoto" },
+            { title: "Bali", description: "Bali is a tropical island in Indonesia, known for its beaches, rice paddies, and vibrant culture.", imageQuery: "Bali" },
+            { title: "Golden Circle Iceland", description: "The Golden Circle is a popular tourist route in Iceland, featuring a series of geological and historical sites, including the Geysir geothermal area and Thingvellir National Park.", imageQuery: "Golden Circle Iceland" },
+            { title: "Niagara Falls", description: "Niagara Falls is a group of massive waterfalls located on the border between the United States and Canada. It is one of the most famous natural attractions in the world.", imageQuery: "Niagara Falls" },
+            { title: "Potala Palace", description: "The Potala Palace is a historical Tibetan Buddhist monastery in Lhasa, Tibet. It was once the chief residence of the Dalai Lama.", imageQuery: "Potala Palace" },
+            { title: "Gardens by the Bay", description: "Gardens by the Bay is a nature park located in Singapore, featuring futuristic architecture, including the Supertree Grove and Cloud Forest.", imageQuery: "Gardens by the Bay" },
+            { title: "Notre-Dame Cathedral", description: "Notre-Dame Cathedral is a medieval Catholic cathedral located in Paris, France. It is famous for its Gothic architecture and stunning stained-glass windows.", imageQuery: "Notre-Dame Cathedral" },
+            { title: "Grand Palace Bangkok", description: "The Grand Palace is a complex of buildings in Bangkok, Thailand, that served as the official residence of the Kings of Siam.", imageQuery: "Grand Palace Bangkok" },
+            { title: "Space Needle", description: "The Space Needle is an observation tower located in Seattle, Washington. It was built for the 1962 World's Fair and offers panoramic views of the city.", imageQuery: "Space Needle" },
+            // Add more destinations here...
+        ];
+
         async function fetchTravelDestination() {
             try {
-                let famousPlaces = [
-                    "Eiffel Tower", "Great Wall of China", "Machu Picchu", "Grand Canyon", 
-                    "Colosseum", "Statue of Liberty", "Sydney Opera House", "Taj Mahal", 
-                    "Mount Fuji", "Santorini", "Great Barrier Reef", "Big Ben"
-                ];
+                const destination = knownDestinations[Math.floor(Math.random() * knownDestinations.length)];
+                let image = await fetchFallbackImage(destination.imageQuery);
+                let titleCn = await translateText(destination.title);
+                let descriptionCn = await translateText(destination.description);
 
-                let randomPlace = famousPlaces[Math.floor(Math.random() * famousPlaces.length)];
-                
-                let pageResponse = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(randomPlace)}`);
-                let pageData = await pageResponse.json();
-                
-                let title = pageData.title;
-                let description = pageData.extract;
-                let image = pageData.thumbnail ? pageData.thumbnail.source : await fetchFallbackImage(title);
-                
                 document.getElementById("destination-img").src = image;
-                document.getElementById("destination-title").innerText = title;
-                document.getElementById("destination-title-cn").innerText = title;
-                document.getElementById("destination-description").innerText = description;
-                document.getElementById("destination-description-cn").innerText = description;
+                document.getElementById("destination-title").innerText = destination.title;
+                document.getElementById("destination-title-cn").innerText = titleCn;
+                document.getElementById("destination-description").innerText = destination.description;
+                document.getElementById("destination-description-cn").innerText = descriptionCn;
                 document.getElementById("best-time").innerText = "Varies by location";
                 document.getElementById("best-time-cn").innerText = "依地點不同";
                 document.getElementById("transportation").innerText = "Check local guides";
@@ -61,7 +77,18 @@
                 console.error("Error fetching travel destination:", error);
             }
         }
-        
+
+        async function translateText(text) {
+            try {
+                let response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&q=${encodeURIComponent(text)}`);
+                let data = await response.json();
+                return data[0][0][0];
+            } catch (error) {
+                console.error("Error translating text:", error);
+                return text;
+            }
+        }
+
         async function fetchFallbackImage(query) {
             try {
                 let response = await fetch(`https://api.unsplash.com/search/photos?query=${query}&client_id=YatWrSFvWHaFvWSvnpBtgeI1CBRT07SfxsTwaNPub6c`);
@@ -72,7 +99,7 @@
                 return "https://via.placeholder.com/400";
             }
         }
-        
+
         window.onload = fetchTravelDestination;
     </script>
 </body>
